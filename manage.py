@@ -5,8 +5,9 @@ from flask import Flask, render_template, jsonify, request, Blueprint, send_from
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from flask_cors import CORS
+from flask_mail import Mail, Message
 from flask_jwt_extended import(
-    JWTManager
+    JWTManager, get_jwt_identity
 )
 #from dotenv import load_dotenv, find_dotenv
 
@@ -25,7 +26,10 @@ from routes.consumerbusiness import route_consumerbusinesses
 from routes.authconsumerbusiness import authconsumerbusiness
 from routes.negocio import route_negocios
 from routes.noauthproduct import route_noauthproducts
+from routes.changePassConsumer import route_changepasscostumers
+from routes.sendemail import sendemail
 from datetime import timedelta
+
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
@@ -36,8 +40,15 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(BASE_DIR, 'd
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'super-secrets'
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=1000)
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_DEBUG'] = True
+app.config['MAIL_USERNAME'] = 'fineukraine94@gmail.com'
+app.config['MAIL_PASSWORD'] = 'dqhxchlvckgjlbks'
 jwt = JWTManager(app)
 db.init_app(app)
+mail = Mail(app)
 migrate = Migrate(app, db)
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
@@ -62,6 +73,8 @@ app.register_blueprint(route_consumerbusinesses)
 app.register_blueprint(route_negocios)
 app.register_blueprint(route_noauthproducts)
 app.register_blueprint(route_categoriesnoauth)
+app.register_blueprint(route_changepasscostumers)
+
 
 if __name__ == '__main__':
     manager.run()

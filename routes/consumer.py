@@ -39,4 +39,6 @@ def consumers(id = None):
         db.session.commit()
 
         return jsonify({'consumer':'Deleted'}), 200
+    
+    
         

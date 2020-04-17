@@ -139,6 +139,7 @@ class Order(db.Model):
     driver = db.Column(db.PickleType, nullable=True)
     comment = db.Column(db.String(255), nullable=True)
     times = db.Column(db.String(255), nullable=True)
+    procent = db.Column(db.Integer, nullable=True, default=0)
     negocio_id = db.Column(db.Integer, db.ForeignKey('negocios.id'), nullable = False)
     negocio = db.relationship(Negocio)
 
@@ -154,5 +155,6 @@ class Order(db.Model):
             'driver': self.driver,
             'comment': self.comment,
             'times': self.times,
+            'procent': self.procent,
             'negocio': self.negocio.serialize(),
         }

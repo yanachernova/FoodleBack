@@ -54,10 +54,7 @@ def orders(id=None, negocio_id = None):
     if request.method == 'PUT':
         
         order = Order.query.get(id)
-        order.price = request.json.get('price')
-        order.consumer_id = request.json.get('consumer_id')
-        order.product_details = request.json.get('product_details')
-        order.driver = request.json.get('driver')
+        order.procent = request.json.get('procent')
         db.session.commit()
         return jsonify(order.serialize()), 200
     if request.method == 'DELETE':
