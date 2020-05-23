@@ -5,10 +5,12 @@ from flask_jwt_extended import (
 )
 route_orders = Blueprint('route_orders', __name__)
 @route_orders.route('/orders', methods=['GET','POST'])
+@route_orders.route('/orders/procent/<int:procent>', methods=['GET','POST'])
 @route_orders.route('/orders/<int:id>', methods=['GET','PUT','DELETE'])
 @route_orders.route('/orders/negocio/<int:negocio_id>', methods=['GET'])
+@route_orders.route('/orders/procent/<int:procent>/negocio/<int:negocio_id>', methods=['GET','POST'])
 @jwt_required
-def orders(id=None, negocio_id = None):
+def orders(id=None, negocio_id = None, procent = None):
     if request.method == 'GET':
         if id is not None:
             order = Order.query.get(id)
@@ -18,6 +20,16 @@ def orders(id=None, negocio_id = None):
                 return jsonify({"order": "Not Found"})
         elif negocio_id is not None:
             orders = Order.query.filter_by(negocio_id=negocio_id).all()
+            orders = list(map(lambda order: order.serialize(), orders))
+            return jsonify(orders), 200
+        elif procent is not None:
+            orders = Order.query.filter_by(procent=procent).all()
+            orders = list(map(lambda order: order.serialize(), orders))
+            return jsonify(orders), 200
+        elif negocio_id is not None and procent is not None:
+            orders = Order.query.filter_by(negocio_id=negocio_id).all()
+            orders = list(map(lambda order: order.serialize(), orders))
+            orders = Order.query.filter_by(procent=procent).all()
             orders = list(map(lambda order: order.serialize(), orders))
             return jsonify(orders), 200
         else:

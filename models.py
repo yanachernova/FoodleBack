@@ -20,9 +20,8 @@ class Consumer(db.Model):
             'fullname': self.fullname,
             'email': self.email,
             'phone_number': self.phone_number,
-            'address': self.address,
+            'address': self.address
         }
-
 
 class Driver(db.Model):
     __tablename__ = 'drivers'
@@ -42,7 +41,7 @@ class Driver(db.Model):
             'fullname': self.fullname,
             'email': self.email,
             'address': self.address,
-            'phone_number': self.phone_number,
+            'phone_number': self.phone_number
         }
 
 class ConsumerBusiness(db.Model):
@@ -61,7 +60,7 @@ class ConsumerBusiness(db.Model):
             'id': self.id,
             'fullname': self.fullname,
             'email': self.email,
-            'phone_number': self.phone_number,
+            'phone_number': self.phone_number
         }
 
 class Negocio(db.Model):
@@ -70,6 +69,8 @@ class Negocio(db.Model):
     name = db.Column(db.String(255), nullable = True, default='')
     phone_number = db.Column(db.String(255), nullable = True, default='')
     address = db.Column(db.String(255), nullable = True, default='')
+    lat = db.Column(db.Integer, nullable = True , default='')
+    lng = db.Column(db.Integer, nullable = True , default='')
     delivery_price = db.Column(db.Integer, nullable = True , default='')
     consumerbusiness_id = db.Column(db.Integer, db.ForeignKey('consumerbusinesses.id'), nullable = True, default='')
     consumerbusiness = db.relationship(ConsumerBusiness, backref = backref('children', cascade = 'all, delete'))
@@ -84,6 +85,8 @@ class Negocio(db.Model):
             'phone_number':self.phone_number,
             'address':self.address,
             'delivery_price':self.delivery_price,
+            'lat':self.lat,
+            'lng':self.lng,
             'consumerbusiness': self.consumerbusiness.serialize() 
         }
 

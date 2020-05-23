@@ -14,6 +14,8 @@ flask-mail = "*"
 flask-cors = "*"
 flask-jwt-extended = "*"
 flask-bcrypt = "*"
+itsdangerouspip = "*"
+flask-wtf = "*"
 
 [requires]
 python_version = "3.7"

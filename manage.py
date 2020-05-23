@@ -9,8 +9,9 @@ from flask_mail import Mail, Message
 from flask_jwt_extended import(
     JWTManager, get_jwt_identity
 )
-#from dotenv import load_dotenv, find_dotenv
 
+#from dotenv import load_dotenv, find_dotenv
+from routes.test import route_test
 from models import Consumer, db, Driver, Product, Category, Order, ConsumerBusiness, Negocio#, Current_order, Business_day, Promocode, Bank_info, Card, Payment_method, History_order, Rating_driver, Rating_business
 from routes.consumer import route_consumers
 from routes.authconsumer import authconsumer
@@ -26,7 +27,7 @@ from routes.consumerbusiness import route_consumerbusinesses
 from routes.authconsumerbusiness import authconsumerbusiness
 from routes.negocio import route_negocios
 from routes.noauthproduct import route_noauthproducts
-from routes.changePassConsumer import route_changepasscostumers
+from routes.forgetPassConsumer import route_forgetpasscostumers
 from routes.sendemail import sendemail
 from datetime import timedelta
 
@@ -73,8 +74,8 @@ app.register_blueprint(route_consumerbusinesses)
 app.register_blueprint(route_negocios)
 app.register_blueprint(route_noauthproducts)
 app.register_blueprint(route_categoriesnoauth)
-app.register_blueprint(route_changepasscostumers)
-
+app.register_blueprint(route_forgetpasscostumers)
+app.register_blueprint(route_test)
 
 if __name__ == '__main__':
     manager.run()

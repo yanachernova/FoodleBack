@@ -2,8 +2,10 @@ from flask import jsonify
 from flask_mail import Mail, Message
 mail = Mail()
 
-def sendMail(subject, name, from_email, to_email):
-    msg = Message(subject, sender=[name, from_email], recipients=[to_email])
-    msg.html = '<h1>Password Changed</h1>'
+def sendMail(subject, to_email, html):
+    msg = Message(subject, sender=['yana', 'fineukraine94@gmail.com'], recipients=[to_email])
+    msg.html = html
     mail.send(msg)
-    return jsonify({"msg": "Email send successfully"}), 200
+    return jsonify({"msg": "Email send successfully"}), 200 
+
+    

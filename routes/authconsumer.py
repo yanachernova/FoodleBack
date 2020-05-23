@@ -39,7 +39,7 @@ def register():
     if not fullname:
         return jsonify({"msg": "You need to write your name"}), 422             
     if not password:
-        return jsonify({"msg": "You need to write your password"}), 422
+        return jsonify({"msg": "You need to write your password"}), 422 
     consumer = Consumer.query.filter_by(email=email).first()
     if consumer:
         return jsonify({"msg": "This email already exist"}), 422

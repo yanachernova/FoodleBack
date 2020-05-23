@@ -38,8 +38,11 @@ def products(id=None, category_id =None):
         description = request.json.get('description')
         not_available = request.json.get('not_available')
         category_id = request.json.get('category_id')
+        quantity = request.json.get('quantity')
         if not thing_name:
-            return jsonify({"msg": "Name is required"}), 422 
+            return jsonify({"msg": "Name is required"}), 422
+        if not quantity:
+            return jsonify({"msg": "Quantity is required"}), 422  
         if not price:
             return jsonify({"msg": "price is required"}), 422 
         if not description:
@@ -52,6 +55,7 @@ def products(id=None, category_id =None):
         product = Product()
         product.thing_name = thing_name
         product.price = price
+        product.quantity = quantity
         product.description = description
         product.not_available = not_available
         product.category_id = category_id

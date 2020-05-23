@@ -38,23 +38,33 @@ def negocios(id=None, consumerbusiness_id = None):
         address = request.json.get('address')
         delivery_price = request.json.get('delivery_price')
         consumerbusiness_id = request.json.get('consumerbusiness_id')
+        lat = request.json.get('lat')
+        lng = request.json.get('lng')
+
+        if not name:
+            return jsonify({"name": "is required"}), 400
+        if not phone_number:
+            return jsonify({"phone_number": "is required"}), 400
+        if not address:
+            return jsonify({"address": "is required"}), 400
+        if not delivery_price:
+            return jsonify({"delivery_price": "is required"}), 400
+        if not consumerbusiness_id:
+            return jsonify({"consumerbusiness_id": "is required"}), 400
+        if not lat:
+            return jsonify({"lat": "is required"}), 400
+        if not lng:
+            return jsonify({"lng": "is required"}), 400
 
         negocio = Negocio()
         negocio.name = name
-        if not name:
-            return jsonify({"name": "is required"}), 400
         negocio.phone_number = phone_number
-        if not phone_number:
-            return jsonify({"phone_number": "is required"}), 400
         negocio.address = address
-        if not address:
-            return jsonify({"address": "is required"}), 400
         negocio.delivery_price = delivery_price
-        if not delivery_price:
-            return jsonify({"delivery_price": "is required"}), 400
         negocio.consumerbusiness_id = consumerbusiness_id
-        if not consumerbusiness_id:
-            return jsonify({"consumerbusiness_id": "is required"}), 400
+        negocio.lat = lat
+        negocio.lng = lng
+
         db.session.add(negocio)
         db.session.commit()
         return jsonify(negocio.serialize()), 201
@@ -66,6 +76,8 @@ def negocios(id=None, consumerbusiness_id = None):
         negocio.address = request.json.get('address')
         negocio.phone_number = request.json.get('phone_number')
         negocio.delivery_price = request.json.get('delivery_price')
+        negocio.lat = request.json.get('lat')
+        negocio.lng = request.json.get('lng')
         db.session.commit()
         return jsonify(negocio.serialize()), 200
 
